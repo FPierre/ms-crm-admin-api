@@ -9,9 +9,8 @@ import router from './router'
 
 Vue.use(VueResource).use(Vuex)
 
-Vue.http.options.root = 'http://localhost:4000'
 // Vue.http.options.xhr = { withCredentials: true }
-Vue.http.options.emulateJSON = true
+// Vue.http.options.emulateJSON = true
 
 Vue.config.productionTip = false
 

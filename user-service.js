@@ -1,5 +1,5 @@
 const cote = require('cote')
-const responder = new cote.Responder({ name: 'user login responder', key: 'login' })
+const responder = new cote.Responder({ name: 'user responder' })
 // const subscriber = new cote.Subscriber({ name: 'user subscriber' })
 
 // DB mocking

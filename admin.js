@@ -3,7 +3,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
 
-const requester = new cote.Requester({ name: 'user login requester', key: 'login' })
+const requester = new cote.Requester({ name: 'user requester' })
 
 app.use(bodyParser.json())
 
@@ -14,9 +14,12 @@ app.use(function(req, res, next) {
   next()
 })
 
-app.post('/', (req, res) => requester.send({ type: 'login', user: req.body }, user => {
-  console.log('user connected')
-  res.send('ok')
-}))
+app.post('/login', (req, res) => {
+  requester.send({ type: 'login', user: req.body.user }, user => {
+    console.log('user connected')
+    console.log(user)
+    res.send(user)
+  })
+})
 
-app.listen(4000, () => console.log('user-admin port 4000'))
+app.listen(4000)

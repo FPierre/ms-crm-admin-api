@@ -1,11 +1,12 @@
 {
-  "name": "microservice-crm",
+  "name": "ms-crm-admin-api",
   "version": "0.0.1",
-  "main": "index.js",
+  "main": "server.js",
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.17.2",
     "cote": "^0.14.1",
-    "express": "^4.15.3"
+    "express": "^4.15.3",
+    "jsonwebtoken": "^7.4.1"
   }
 }

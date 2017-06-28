@@ -17,4 +17,14 @@ router.post('/create', (req, res, next) => {
   })
 })
 
+router.post('/update', (req, res, next) => {
+  console.log(req.body.agency)
+  requester.send({ type: 'update', agency: req.body.agency }, agency => res.send(agency))
+})
+
+router.post('/delete', (req, res, next) => {
+  console.log(req.body.agencyId)
+  requester.send({ type: 'delete', agency: req.body.agency }, agency => res.send(agency))
+})
+
 module.exports = router

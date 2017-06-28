@@ -1,10 +1,9 @@
 const express = require('express')
-const router = express.Router()
 const cote = require('cote')
+const router = express.Router()
 
 const requester = new cote.Requester({ name: 'user requester' })
 
-// GET users listing
 router.get('/', (req, res, next) => {
   res.send('respond with a resource')
 })

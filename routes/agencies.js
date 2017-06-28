@@ -6,8 +6,14 @@ const requester = new cote.Requester({ name: 'agency requester' })
 
 router.get('', (req, res, next) => {
   requester.send({ type: 'index' }, agencies => {
-    console.log('agencies list')
     res.send(agencies)
+  })
+})
+
+router.post('/create', (req, res, next) => {
+  console.log(req.body.agency)
+  requester.send({ type: 'create', agency: req.body.agency }, agency => {
+    res.send(agency)
   })
 })
 

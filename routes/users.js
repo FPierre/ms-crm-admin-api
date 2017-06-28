@@ -1,9 +1,19 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express')
+const router = express.Router()
+const cote = require('cote')
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+const requester = new cote.Requester({ name: 'user requester' })
 
-module.exports = router;
+// GET users listing
+router.get('/', (req, res, next) => {
+  res.send('respond with a resource')
+})
+
+app.post('/login', (req, res, next) => {
+  requester.send({ type: 'login', user: req.body.user }, user => {
+    console.log('user connected')
+    res.send(user)
+  })
+})
+
+module.exports = router

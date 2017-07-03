@@ -3,10 +3,23 @@ const cote = require('cote')
 const router = express.Router()
 
 const requester = new cote.Requester({ name: 'agency requester', key: 'agency' })
+const userRequester = new cote.Requester({ name: 'user requester', key: 'user' })
 
 router.get('', (req, res, next) => {
+  const promises = []
+
   requester.send({ type: 'index' }, agencies => {
-    res.send(agencies)
+    for (const agency of agencies) {
+      const promise = userRequester.send({ type: 'show', userId: agency.responsibleId }).then(user => {
+        agency['responsible'] = user
+      }).catch(e => console.log('rejected', e))
+
+      promises.push(promise)
+    }
+
+    Promise.all(promises).then(u => {
+      res.send(agencies)
+    }, () => console.log('ko 2'))
   })
 })
 

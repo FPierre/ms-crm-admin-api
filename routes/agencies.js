@@ -23,6 +23,13 @@ router.get('', (req, res, next) => {
   })
 })
 
+router.get('/show', (req, res, next) => {
+  console.log(req.body)g
+  requester.send({ type: 'show', id: req.body.id }).then(agency => {
+    res.send(agency)
+  }).catch(e => console.log('rejected', e))
+})
+
 router.post('/create', (req, res, next) => {
   requester.send({ type: 'create', agency: req.body.agency }, agency => {
     res.send(agency)

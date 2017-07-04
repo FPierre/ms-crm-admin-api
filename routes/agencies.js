@@ -24,7 +24,6 @@ router.get('', (req, res, next) => {
 })
 
 router.get('/show', (req, res, next) => {
-  console.log(req.body)g
   requester.send({ type: 'show', id: req.body.id }).then(agency => {
     res.send(agency)
   }).catch(e => console.log('rejected', e))

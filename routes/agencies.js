@@ -6,6 +6,11 @@ const requester = new cote.Requester({ name: 'agency requester', key: 'agency' }
 const userRequester = new cote.Requester({ name: 'user requester', key: 'user' })
 
 router.get('', (req, res, next) => {
+  requester.send({ type: 'index' })
+    .then(agencies => res.send(agencies))
+    .catch(err => console.log('rejected', err))
+
+  /*
   const promises = []
 
   requester.send({ type: 'index' }, agencies => {
@@ -21,12 +26,13 @@ router.get('', (req, res, next) => {
       res.send(agencies)
     }, () => console.log('ko 2'))
   })
+  */
 })
 
 router.get('/show', (req, res, next) => {
-  requester.send({ type: 'show', id: req.body.id }).then(agency => {
-    res.send(agency)
-  }).catch(e => console.log('rejected', e))
+  requester.send({ type: 'show', id: req.body.id })
+    .then(agency => res.send(agency))
+    .catch(err => console.log('rejected', err))
 })
 
 router.post('/create', (req, res, next) => {

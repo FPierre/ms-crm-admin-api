@@ -23,8 +23,8 @@ router.get('', (req, res, next) => {
   })
 })
 
-router.get('/show', (req, res, next) => {
-  requester.send({ type: 'show', id: req.body.id })
+router.get('/:id', (req, res, next) => {
+  requester.send({ type: 'show', id: req.params.id })
     .then(agency => res.send(agency))
     .catch(err => console.log(err))
 })

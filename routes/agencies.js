@@ -6,33 +6,27 @@ const requester = new cote.Requester({ name: 'agency requester', key: 'agency' }
 const userRequester = new cote.Requester({ name: 'user requester', key: 'user' })
 
 router.get('', (req, res, next) => {
-  requester.send({ type: 'index' })
-    .then(agencies => res.send(agencies))
-    .catch(err => console.log('rejected', err))
-
-  /*
   const promises = []
 
-  requester.send({ type: 'index' }, agencies => {
+  requester.send({ type: 'index' }).then(agencies => {
     for (const agency of agencies) {
-      const promise = userRequester.send({ type: 'show', userId: agency.responsibleId }).then(user => {
-        agency['responsible'] = user
-      }).catch(e => console.log('rejected', e))
+      const promise = userRequester.send({ type: 'show', id: agency._responsibleId })
+        .then(user => agency['responsible'] = user)
+        .catch(err => console.log(err))
 
       promises.push(promise)
     }
 
-    Promise.all(promises).then(u => {
-      res.send(agencies)
-    }, () => console.log('ko 2'))
+    Promise.all(promises)
+      .then(() => res.send(agencies))
+      .catch(err => console.log(err))
   })
-  */
 })
 
 router.get('/show', (req, res, next) => {
   requester.send({ type: 'show', id: req.body.id })
     .then(agency => res.send(agency))
-    .catch(err => console.log('rejected', err))
+    .catch(err => console.log(err))
 })
 
 router.post('/create', (req, res, next) => {

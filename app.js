@@ -6,6 +6,7 @@ const bodyParser = require('body-parser')
 
 const index = require('./routes/index')
 const agencies = require('./routes/agencies')
+const leads = require('./routes/leads')
 const users = require('./routes/users')
 
 const app = express()
@@ -15,6 +16,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 
+// CORS
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*')
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
@@ -22,8 +24,10 @@ app.use((req, res, next) => {
   next()
 })
 
+// Routes
 app.use('/', index)
 app.use('/agencies', agencies)
+app.use('/leads', leads)
 app.use('/users', users)
 
 // Catch 404 and forward to error handler

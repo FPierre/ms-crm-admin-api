@@ -3,6 +3,7 @@ const express = require('express')
 const logger = require('morgan')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
+const acl = require('express-acl')
 
 const index = require('./routes/index')
 const agencies = require('./routes/agencies')
@@ -15,6 +16,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 
+// CORS
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*')
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
@@ -22,6 +24,20 @@ app.use((req, res, next) => {
   next()
 })
 
+// ACL
+const responseObject = {
+  status: 'Access Denied',
+  message: 'You are not authorized to access this resource'
+}
+
+acl.config({
+  defaultRole: 'user',
+  yml: true
+}, responseObject)
+
+// app.use(acl.authorize)
+
+// Route
 app.use('/', index)
 app.use('/agencies', agencies)
 app.use('/users', users)

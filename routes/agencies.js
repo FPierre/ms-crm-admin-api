@@ -30,17 +30,17 @@ router.get('/:id', (req, res, next) => {
     .catch(err => console.log(err))
 })
 
-router.post('/create', (req, res, next) => {
-  requester.send({ type: 'create', agency: req.body.agency }, agency => {
-    res.send(agency)
-  })
+router.post('', (req, res, next) => {
+  requester.send({ type: 'create', agency: req.body.agency, user: req.body.user })
+    .then(agency => res.send(agency))
+    .catch(err => console.log(err))
 })
 
-router.post('/update', (req, res, next) => {
+router.patch('', (req, res, next) => {
   requester.send({ type: 'update', agency: req.body.agency }, agency => res.send(agency))
 })
 
-router.post('/delete', (req, res, next) => {
+router.delete('', (req, res, next) => {
   requester.send({ type: 'delete', agency: req.body.agency }, agency => res.send(agency))
 })
 

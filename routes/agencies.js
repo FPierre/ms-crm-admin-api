@@ -37,7 +37,9 @@ router.post('', (req, res, next) => {
 })
 
 router.patch('', (req, res, next) => {
-  requester.send({ type: 'update', agency: req.body.agency }, agency => res.send(agency))
+  requester.send({ type: 'update', agency: req.body.agency })
+    .then(agency => res.send(agency))
+    .catch(err => console.log(err))
 })
 
 router.delete('', (req, res, next) => {

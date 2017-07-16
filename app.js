@@ -3,7 +3,10 @@ const express = require('express')
 const logger = require('morgan')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
+// const jwt = require('jsonwebtoken')
+// const expressJwt = require('express-jwt')
 
+const { jwtCheck, requireScope } = require('./auth')
 const index = require('./routes/index')
 const agencies = require('./routes/agencies')
 const leads = require('./routes/leads')
@@ -19,10 +22,12 @@ app.use(cookieParser())
 // CORS
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*')
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization')
 
   next()
 })
+
+// app.use('/agencies', jwtCheck, requireScope('full_access'))
 
 // Routes
 app.use('/', index)

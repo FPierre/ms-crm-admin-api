@@ -1,5 +1,3 @@
-// const crypto = require('crypto')
-
 const jwt = require('jsonwebtoken')
 
 const algorithm = 'aes-256-ctr'
@@ -20,32 +18,10 @@ function genJti () {
 }
 
 module.exports = {
-  /*
-  encrypt: password => {
-    const cipher = crypto.createCipher(algorithm, privateKey)
-    let crypted = cipher.update(password, 'utf8', 'hex')
-    crypted += cipher.final('hex')
-
-    return crypted
-  },
-
-  decrypt: password => {
-    const decipher = crypto.createDecipher(algorithm, privateKey)
-    let dec = decipher.update(password, 'hex', 'utf8')
-    dec += decipher.final('utf8')
-
-    return dec
-  },
-  */
-
   createIdToken: user => {
     delete user.password
 
-    return jwt.sign(
-      user,
-      privateKey,
-      { expiresIn: 60 * 60 * 5 }
-    )
+    return jwt.sign(user, privateKey, { expiresIn: 60 * 60 * 5 })
   },
 
   createAccessToken: () => {

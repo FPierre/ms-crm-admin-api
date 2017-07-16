@@ -9,19 +9,21 @@ const userRequester = new cote.Requester({ name: 'user requester', key: 'user' }
 router.get('', (req, res, next) => {
   const promises = []
 
-  requester.send({ type: 'index' }).then(agencies => {
-    for (const agency of agencies) {
-      const promise = userRequester.send({ type: 'show', id: agency._responsibleId })
-        .then(user => agency['responsible'] = user)
+  requester.send({ type: 'index', page: req.query.page, limit: 1 })
+    .then(paginatedAgencies => {
+      for (const agency of paginatedAgencies.docs) {
+        const promise = userRequester.send({ type: 'show', id: agency._responsibleId })
+          .then(user => agency['responsible'] = user)
+          .catch(err => console.log(err))
+
+        promises.push(promise)
+      }
+
+      Promise.all(promises)
+        .then(() => res.send(paginatedAgencies))
         .catch(err => console.log(err))
-
-      promises.push(promise)
-    }
-
-    Promise.all(promises)
-      .then(() => res.send(agencies))
-      .catch(err => console.log(err))
-  })
+    })
+    .catch(err => console.log(err))
 })
 
 router.get('/:id', (req, res, next) => {
@@ -43,7 +45,8 @@ router.patch('', (req, res, next) => {
 })
 
 router.delete('', (req, res, next) => {
-  requester.send({ type: 'delete', agency: req.body.agency }, agency => res.send(agency))
+  requester.send({ type: 'delete', agency: req.body.agency })
+    .then(agency => res.send(agency))
 })
 
 module.exports = router

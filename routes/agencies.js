@@ -38,15 +38,22 @@ router.post('', (req, res, next) => {
     .catch(err => console.log(err))
 })
 
-router.patch('', (req, res, next) => {
+router.put('', (req, res, next) => {
   requester.send({ type: 'update', agency: req.body.agency })
-    .then(agency => res.send(agency))
+    .then(agency => res.status(204).send())
     .catch(err => console.log(err))
 })
 
 router.delete('', (req, res, next) => {
-  requester.send({ type: 'delete', agency: req.body.agency })
+  requester.send({ type: 'delete', agency: req.body.id })
     .then(agency => res.send(agency))
+})
+
+router.get('/:id/history', (req, res, next) => {
+  requester.send({ type: 'history', id: req.query.id }, h => {
+    console.log(h)
+    res.send(h)
+  })
 })
 
 module.exports = router
